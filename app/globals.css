@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* register dark variant exactly as docs recommend */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* theme tokens (optional) */
 @theme {
   --color-lightHover: #fcf4ff;
   --color-darkHover: #2a004a;
@@ -12,4 +16,27 @@
   --shadow-white: 4px 4px 0 #fff;
 
   --grid-template-columns-auto: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+@layer base {
+  :root {
+    --background: #ffffff;
+    --foreground: #000000;
+    color-scheme: light;
+  }
+
+  /* accept html.dark, .dark on an ancestor, or data-theme if you switch to that */
+  html.dark,
+  :where(.dark),
+  :where([data-theme="dark"]) {
+    --background: var(--color-darkTheme);
+    --foreground: #ffffff;
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    transition: background-color 160ms ease, color 160ms ease;
+  }
 }
